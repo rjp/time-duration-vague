@@ -5,6 +5,10 @@ require 'time-duration-vague'
 
 class Test_Times < Test::Unit::TestCase
 	def test_one_second
-		assert_equal('one second', Time::Duration::Vague(1), '(1) should be "one second"')
+		assert_equal('1 second', Time::Duration::vague(1), '1 second')
+	end
+
+	def test_two_second
+		assert_equal('2 seconds', Time::Duration::vague(2), '2 seconds')
 	end
 end
