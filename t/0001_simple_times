@@ -1,6 +1,10 @@
+$:.push('..')
+
 require 'test/unit'
 require 'time-duration-vague'
 
 class Test_Times < Test::Unit::TestCase
-
+	def test_one_second
+		assert_equal('one second', Time::Duration::Vague(1), '(1) should be "one second"')
+	end
 end
