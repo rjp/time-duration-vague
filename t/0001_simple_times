@@ -1,0 +1,6 @@
+require 'test/unit'
+require 'time-duration-vague'
+
+class Test_Times < Test::Unit::TestCase
+
+end
