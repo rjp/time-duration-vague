@@ -1,19 +1,20 @@
 ---
 layout: default
-title: irc_muc
+title: time-duration-vague
 ---
 <div id="content">
-<h1>irc_muc</h1>
+<h1> time-duration-vague</h1>
+<h2>Be vague about time durations</h2>
 <p>
-<tt>
-irc_muc - gateway between IRC and XMPP MUC</tt>
-
-<p>
-Pretends to be an IRC server so you can use your favourite IRC client or bot
-in XMPP MUC conferences without rewriting the messaging backend.
+For example, if a duration is within 10% (capped to 5 minutes) of a nice duration (multiples of 5, 10, 20, 30, 60 minutes, etc.), t-d-v will report it as "nearly N minutes" (if it's below) or "just past N minutes" (if above). A 5% span (capped to 2.5 minutes) will count as the time itself ("N minutes").
 </p>
-<p>
-The only change necessary is to authenticate against the IRC server with your
-XMPP credentials.
-</p>
+<h2>Example return values</h2>
+<table>
+<tr><th>Seconds <th>Duration </tr>
+<tr><td>&lt; 30 <td>just now </tr>
+<tr><td>175 <td>nearly 3 minutes </tr>
+<tr><td>200 <td>3 and a bit minutes </tr>
+<tr><td>265 <td>nearly 5 minutes </tr>
+<tr><td>550 <td>nearly 10 minutes </tr>
+</table>
 </div>
