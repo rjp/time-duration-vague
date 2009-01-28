@@ -4,11 +4,26 @@ require 'test/unit'
 require 'time-duration-vague'
 
 class Test_Times < Test::Unit::TestCase
-	def test_one_second
-		assert_equal('1 second', Time::Duration::vague(1), '1 second')
+	def v(x)
+		return Time::Duration::vague(x)
 	end
 
-	def test_two_second
-		assert_equal('2 seconds', Time::Duration::vague(2), '2 seconds')
+	def test_just_now
+		assert_equal('just now', v(1), '1 second')
+		assert_equal('just now', v(2), '2 seconds')
+	end
+
+	def test_almost_minute
+		assert_equal('almost 1 minutes', v(50), '50 seconds')
+		assert_equal('just over 1 minutes', v(65), '65 seconds')
+	end
+
+	def test_almost_four_minutes
+		assert_equal('almost 4 minutes', v(235), '235 seconds')
+		assert_equal('just over 4 minutes', v(254), '254 seconds')
+	end
+
+	def test_default
+		assert_equal('about 4 and a half minutes', v(270), '270s')
 	end
 end
