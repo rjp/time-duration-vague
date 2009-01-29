@@ -1,21 +1,39 @@
 class Time
 	class Duration
 		def Duration.vague(x)
-			minutes = x / 60
-			next_min = 1+minutes
 			seconds = x % 60
-			nearby = (seconds + 15) % 60
 			d = case
 				when x <= 20: "just now"
 				when x <= 40: "about half a minute"
-				when seconds < 5: "#{minutes} minutes"
-				when seconds > 55: "#{next_min} minutes"
-				when seconds >= 40: "almost #{next_min} minutes"
-				when seconds <= 20: "just over #{minutes} minutes"
-				else "about #{minutes} and a half minutes"
+				when x <= 59: "about 1 minute"
 			end
-			d.gsub!(%r{(^|\D)1 minutes}, '\1'+"1 minute")
+			return d unless d.nil?
+
+			[
+				[60, 'minutes'], [3600, 'hours']
+			].each { |duration, name|
+				units = x / duration
+				next_min = 1+units
+				pcage = self.ratio(x, duration)
+				if (units > 0) or (units == 0 and pcage > 85) then
+					d = case
+						when pcage < 6: "about #{units} #{name}"
+						when pcage <= 10: "just over #{units} #{name}"
+                        when pcage < 35: "#{units} {name}"
+                        when pcage > 35 && pcage < 65: "about #{units} and a half #{name}"
+                        when pcage >= 65: "closer to #{next_min} #{name}"
+						when pcage >= 90: "almost #{next_min} #{name}"
+						when pcage > 94: "about #{next_min} #{name}"
+					end
+					d.gsub!(%r{(^|\D)1 #{name}}, '\1'+"1 #{name.chop}")
+				end
+			}	
 			return d
+		end
+
+		def self.ratio(seconds, unit)
+			offset = seconds % unit
+			return 100 * offset.to_f / unit
 		end
 	end
 end
