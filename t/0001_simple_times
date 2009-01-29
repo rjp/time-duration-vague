@@ -14,8 +14,8 @@ class Test_Times < Test::Unit::TestCase
 	end
 
 	def test_almost_minute
-		assert_equal('almost 1 minutes', v(50), '50 seconds')
-		assert_equal('just over 1 minutes', v(65), '65 seconds')
+		assert_equal('almost 1 minute', v(50), '50 seconds')
+		assert_equal('just over 1 minute', v(65), '65 seconds')
 	end
 
 	def test_almost_four_minutes
